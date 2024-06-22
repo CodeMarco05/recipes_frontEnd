@@ -16,6 +16,8 @@ dependencies:
   get: ^4.6.5
   flutter_screenutil: ^5.8.4
   cupertino_icons: ^1.0.2
+  flutter_dotenv: ^5.0.3
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
@@ -26,5 +28,13 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
-
-
+  fonts: 
+    - family: Playwrite
+      fonts:
+        - asset: assets/fonts/Playwrite.ttf
+    - family: Exo
+      fonts:
+        - asset: assets/fonts/Exo.ttf
+  assets :
+    - assets/images/
+    - assets/.env

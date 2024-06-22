@@ -77,3 +77,5 @@ build/
 .pubspec.lock
 .pubspec.yaml
 
+.env
+commands.txt
