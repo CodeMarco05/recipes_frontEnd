@@ -86,64 +86,9 @@ class HomescreenController extends GetxController {
   }
 
   //delete item
-  Future<void> deleteFoodItem(String id) async {
-    //get the api key
-    //await dotenv.load(fileName: "assets/.env");
-    //String apiKey = dotenv.env['API_KEY'].toString();
-    String apiKey = const String.fromEnvironment("API_KEY");
-    var response = await http.delete(
-      Uri.parse(Constants.server_url + '/recipes/$id?key=$apiKey'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    try {
-      if (response.statusCode == 200) {
-        // If server returns an OK response, parse the JSON
-        var data = json.decode(response.body);
-        // Do something with the data
-        print(data);
-      } else if (response.statusCode == 404) {
-        // If the server returns a 404 status code, the recipe was not found
-        throw Exception('Recipe not found');
-      } else {
-        // If the server did not return a 200 OK response or a 404 status code,
-        // throw an exception.
-        throw Exception('Failed to delete recipe');
-      }
-    } catch (e) {
-      // Handle any exceptions here
-      print(e.toString());
-    }
-  }
+  
 
-  Future<void> updateFoodItem(String id, FoodModel updatedFoodItem) async {
-    //get the api key
-    //await dotenv.load(fileName: "assets/.env");
-    //String apiKey = dotenv.env['API_KEY'].toString();
-    String apiKey = const String.fromEnvironment("API_KEY");
-    var response = await http.put(
-      Uri.parse(Constants.server_url + '/recipes/$id?key=$apiKey'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(updatedFoodItem.toJson()),
-    );
-    try {
-      if (response.statusCode == 200) {
-        // If server returns an OK response, parse the JSON
-        var data = json.decode(response.body);
-        // Do something with the data
-        print(data);
-      } else if (response.statusCode == 404) {
-        // If the server returns a 404 status code, the recipe was not found
-        throw Exception('Recipe not found');
-      } else {
-        // If the server did not return a 200 OK response or a 404 status code,
-        // throw an exception.
-        throw Exception('Failed to update recipe');
-      }
-    } catch (e) {
-      // Handle any exceptions here
-      print(e.toString());
-    }
-  }
+  
 
   Future<void> saveFoodItem(FoodModel foodItem) async {
     final prefs = await SharedPreferences.getInstance();

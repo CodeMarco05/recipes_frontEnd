@@ -5,18 +5,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recipes_frontend/Constants.dart';
 import 'package:recipes_frontend/models/food_model.dart';
+import 'package:recipes_frontend/screens/Details.dart';
 import 'package:recipes_frontend/screens/HomeScreen.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AddItemScreen extends StatefulWidget {
-  static final String routeName = '/add-item';
+class EditItemScreen extends StatefulWidget {
+  static final String routeName = '/edit-item';
   @override
-  _AddItemScreenState createState() => _AddItemScreenState();
+  _EditItemScreenState createState() => _EditItemScreenState();
 }
 
-class _AddItemScreenState extends State<AddItemScreen> {
-  //q: for what is the form key used?
-  //a
+class _EditItemScreenState extends State<EditItemScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _ingredientsController = TextEditingController();
@@ -30,49 +30,27 @@ class _AddItemScreenState extends State<AddItemScreen> {
     super.dispose();
   }
 
-  Future<void> _addItem() async {
-    if (_formKey.currentState!.validate()) {
-      /*final newItem = FoodModel(
-        title: _titleController.text,
-        ingredients: _ingredientsController.text.split(','),
-        instructions: _instructionsController.text,
-      );*/
+  @override
+  void initState() {
+    super.initState();
+    _loadItemFromSharedPreferences();
+  }
 
-      final foodItem = FoodModel.withoutId(
-        title: _titleController.text,
-        //trim leading spaced
-        ingredients: _ingredientsController.text.split(',').map((e) => e.trim()).toList(),
-        instructions: _instructionsController.text,
-      );
+  void _loadItemFromSharedPreferences() async {
+    // Retrieve the saved item from SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     String? savedItem = prefs.getString('savedFoodItem');
 
-      //call the api for inser
-      String apiKey = const String.fromEnvironment("API_KEY");
+    if (savedItem != null) {
+      // Parse the saved item as a FoodModel object
+      FoodModel? foodModel = await FoodModel.fromJson(jsonDecode(savedItem) as Map<String, dynamic>);
 
-      var response = await http.post(
-        Uri.parse(Constants.server_url + '/insertRecipe?key=$apiKey'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'title': foodItem.title,
-          'ingredients': foodItem.ingredients,
-          'instructions': foodItem.instructions,
-        }),
-      );
-
-      try {
-        if (response.statusCode == 201) {
-          //Server was okay
-        } else {
-          // If the server did not return a 200 OK response,
-          // throw an exception.
-          throw Exception('Failed to add recipe');
-        }
-      } catch (e) {
-        // Handle any exceptions here
-        print(e.toString());
-      }
-
-      //homescreenController.addFoodItem(newItem);
-      Get.toNamed(Homescreen.routeName);
+      // Set the text for the text editing controllers
+      setState(() {
+        _titleController.text = foodModel?.title ?? '';
+        _ingredientsController.text = foodModel?.ingredients.join(', ') ?? '';
+        _instructionsController.text = foodModel?.instructions ?? '';
+      });
     }
   }
 
@@ -80,11 +58,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Item'),
+        title: Text('Edit Item'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.offAllNamed(Homescreen.routeName);
+            Get.back();
           },
         ),
       ),
@@ -100,25 +78,16 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   decoration: InputDecoration(
                     labelText: 'Title',
                     border: OutlineInputBorder(
-                      // Default border
-                      borderRadius: BorderRadius.circular(8.0), // Rounded edges
-                      borderSide: BorderSide(
-                          color: Colors.grey,
-                          width:
-                              1.0), // Solid border with specified color and width
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Border when TextFormField is enabled
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Border when TextFormField is focused
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          color: Colors.blue,
-                          width:
-                              2.0), // Typically a different color or width to indicate focus
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
                     ),
                   ),
                   validator: (value) {
@@ -128,33 +97,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                SizedBox(height: 20.h),
                 TextFormField(
                   controller: _ingredientsController,
                   decoration: InputDecoration(
                     labelText: 'Ingredients (comma-separated)',
                     border: OutlineInputBorder(
-                      // Default border
-                      borderRadius: BorderRadius.circular(8.0), // Rounded edges
-                      borderSide: BorderSide(
-                          color: Colors.grey,
-                          width:
-                              1.0), // Solid border with specified color and width
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Border when TextFormField is enabled
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Border when TextFormField is focused
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          color: Colors.blue,
-                          width:
-                              2.0), // Typically a different color or width to indicate focus
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
                     ),
                   ),
                   minLines: 1,
@@ -166,33 +124,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                SizedBox(height: 20.h),
                 TextFormField(
                   controller: _instructionsController,
                   decoration: InputDecoration(
                     labelText: 'Instructions',
                     border: OutlineInputBorder(
-                      // Default border
-                      borderRadius: BorderRadius.circular(8.0), // Rounded edges
-                      borderSide: BorderSide(
-                          color: Colors.grey,
-                          width:
-                              1.0), // Solid border with specified color and width
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Border when TextFormField is enabled
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide(color: Colors.grey, width: 2.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Border when TextFormField is focused
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          color: Colors.blue,
-                          width:
-                              2.0), // Typically a different color or width to indicate focus
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
                     ),
                   ),
                   minLines: 3,
@@ -206,7 +153,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 SizedBox(height: 16.0),
                 GestureDetector(
-                  onTap: _addItem,
+                  onTap: _editItem,
                   child: Container(
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -216,7 +163,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Add Item',
+                        'Confirm',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 20.0,
@@ -231,5 +178,62 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ),
       ),
     );
+  }
+
+  void _editItem() async {
+    //update
+    if (_formKey.currentState!.validate()) {
+      // Create a new FoodModel object with the updated values
+      FoodModel updatedFoodItem = FoodModel.withoutId(
+        title: _titleController.text,
+        ingredients: _ingredientsController.text.split(',').map((e) => e.trim()).toList(),
+        instructions: _instructionsController.text,
+      );
+
+      // Retrieve the saved item from SharedPreferences
+      SharedPreferences.getInstance().then((prefs) async {
+        String? savedItem = prefs.getString('savedFoodItem');
+        if (savedItem != null) {
+          // Parse the saved item as a FoodModel object
+          FoodModel? foodModel = await FoodModel.fromJson(jsonDecode(savedItem) as Map<String, dynamic>);
+
+          // Update the saved item with the new values
+          updatedFoodItem.id = foodModel!.id;
+          updateFoodItem(updatedFoodItem.id, updatedFoodItem);
+        }
+      });
+
+      // Navigate back to the home screen
+      Get.offAllNamed(Homescreen.routeName);
+    }
+  }
+
+  Future<void> updateFoodItem(String id, FoodModel updatedFoodItem) async {
+    //get the api key
+    //await dotenv.load(fileName: "assets/.env");
+    //String apiKey = dotenv.env['API_KEY'].toString();
+    String apiKey = const String.fromEnvironment("API_KEY");
+    var response = await http.put(
+      Uri.parse(Constants.server_url + '/recipes/$id?key=$apiKey'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(updatedFoodItem.toJson()),
+    );
+    try {
+      if (response.statusCode == 200) {
+        // If server returns an OK response, parse the JSON
+        var data = json.decode(response.body);
+        // Do something with the data
+      } else if (response.statusCode == 404) {
+        // If the server returns a 404 status code, the recipe was not found
+        throw Exception('Recipe not found');
+      } else {
+        // If the server did not return a 200 OK response or a 404 status code,
+        // throw an exception.
+        throw Exception('Failed to update recipe');
+      }
+    } catch (e) {
+      // Handle any exceptions here
+      print(e.toString());
+    }
   }
 }

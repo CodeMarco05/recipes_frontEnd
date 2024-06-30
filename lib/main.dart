@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:recipes_frontend/models/food_model.dart';
 import 'package:recipes_frontend/screens/AddItem.dart';
 import 'package:recipes_frontend/screens/Details.dart';
+import 'package:recipes_frontend/screens/EditItemScreen.dart';
 import 'package:recipes_frontend/screens/HomeScreen.dart';
 
 void main() async {
@@ -45,6 +46,7 @@ class MainApp extends StatelessWidget {
               page: () => DetailsPage(),
             ),
             GetPage(name: AddItemScreen.routeName, page: () => AddItemScreen()),
+            GetPage(name: EditItemScreen.routeName, page: () => EditItemScreen()),
           ],
         );
       },

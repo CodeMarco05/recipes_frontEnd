@@ -17,7 +17,6 @@ class FoodModel {
 
   //empty constructor
 
-  
   FoodModel.withoutId({
     required this.title,
     required this.ingredients,
