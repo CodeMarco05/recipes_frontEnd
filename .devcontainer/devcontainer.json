@@ -1,0 +1,14 @@
+{
+    "name": "Flutter Dev Container",
+    "context": "..",
+    "dockerFile": "Dockerfile",
+    "forwardPorts": [8080],
+    "extensions": [
+        "Dart-Code.flutter",
+        "Dart-Code.dart-code"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "postCreateCommand": "flutter pub get"
+}

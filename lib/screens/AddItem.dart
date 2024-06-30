@@ -47,32 +47,31 @@ class _AddItemScreenState extends State<AddItemScreen> {
       //call the api for inser
       String apiKey = const String.fromEnvironment("API_KEY");
 
-    var response = await http.post(
-      Uri.parse(Constants.server_url + '/insertRecipe?key=$apiKey'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'title': foodItem.title,
-        'ingredients': foodItem.ingredients,
-        'instructions': foodItem.instructions,
-      }),
-    );
+      var response = await http.post(
+        Uri.parse(Constants.server_url + '/insertRecipe?key=$apiKey'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'title': foodItem.title,
+          'ingredients': foodItem.ingredients,
+          'instructions': foodItem.instructions,
+        }),
+      );
 
-    try {
-      if (response.statusCode == 201) {
-        //Server was okay
-      } else {
-        // If the server did not return a 200 OK response,
-        // throw an exception.
-        throw Exception('Failed to add recipe');
+      try {
+        if (response.statusCode == 201) {
+          //Server was okay
+        } else {
+          // If the server did not return a 200 OK response,
+          // throw an exception.
+          throw Exception('Failed to add recipe');
+        }
+      } catch (e) {
+        // Handle any exceptions here
+        print(e.toString());
       }
-    } catch (e) {
-      // Handle any exceptions here
-      print(e.toString());
-    }
 
       //homescreenController.addFoodItem(newItem);
       Get.toNamed(Homescreen.routeName);
-
     }
   }
 
@@ -84,7 +83,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.toNamed(Homescreen.routeName);
+            Get.offAllNamed(Homescreen.routeName);
           },
         ),
       ),
@@ -205,10 +204,26 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   },
                 ),
                 SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: _addItem,
-                  child: Text('Add'),
-                ),
+                GestureDetector(
+                  onTap: _addItem,
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add Item',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

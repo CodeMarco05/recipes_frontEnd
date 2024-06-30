@@ -1,6 +1,6 @@
 class Constants {
   // Add your constants here
-  static const String appName = 'Sweet Recipes';
+  static const String appName = 'Marie und Marco';
   static const int maxItems = 10;
   static const double defaultPadding = 16.0;
 

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes_frontend/Constants.dart';
 import 'package:recipes_frontend/models/food_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomescreenController extends GetxController {
   Future<List<FoodModel>> getFoodItems() async {
@@ -114,7 +115,6 @@ class HomescreenController extends GetxController {
     }
   }
 
-
   Future<void> updateFoodItem(String id, FoodModel updatedFoodItem) async {
     //get the api key
     //await dotenv.load(fileName: "assets/.env");
@@ -143,5 +143,11 @@ class HomescreenController extends GetxController {
       // Handle any exceptions here
       print(e.toString());
     }
+  }
+
+  Future<void> saveFoodItem(FoodModel foodItem) async {
+    final prefs = await SharedPreferences.getInstance();
+    String json = jsonEncode(foodItem.toJson());
+    await prefs.setString('savedFoodItem', json);
   }
 }

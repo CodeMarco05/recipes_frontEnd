@@ -15,6 +15,9 @@ class FoodModel {
     required this.updatedAt,
   });
 
+  //empty constructor
+
+  
   FoodModel.withoutId({
     required this.title,
     required this.ingredients,
@@ -60,5 +63,20 @@ class FoodModel {
       'createdAt': createdAt.toString(),
       'updatedAt': updatedAt.toString(),
     };
+  }
+
+  static Future<FoodModel?> fromJson(Map<String, dynamic> map) {
+    try {
+      return Future.value(FoodModel(
+        id: map['id'],
+        title: map['title'],
+        ingredients: map['ingredients'].cast<String>(),
+        instructions: map['instructions'],
+        createdAt: DateTime.parse(map['createdAt']),
+        updatedAt: DateTime.parse(map['updatedAt']),
+      ));
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 }

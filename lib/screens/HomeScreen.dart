@@ -49,7 +49,7 @@ class Homescreen extends StatelessWidget {
                               style: TextStyle(
                                   fontFamily: Constants.playwrite_font,
                                   color: Colors.white,
-                                  fontSize: 28.sp,
+                                  fontSize: 22.sp,
                                   fontWeight: FontWeight.w900),
                             ),
                             Container(
@@ -91,8 +91,10 @@ class Homescreen extends StatelessWidget {
                             return Padding(
                               padding: EdgeInsets.only(bottom: 10.0),
                               child: InkWell(
-                                onTap: (){
-                                  Get.toNamed(DetailsPage.routeName, arguments: snapshot.data![index]);
+                                onTap: () {
+                                  homescreenController.saveFoodItem(snapshot.data![index]);
+                                  Get.toNamed(DetailsPage.routeName,
+                                      arguments: snapshot.data![index]);
                                 },
                                 child: ListTile(
                                   title: Text(
@@ -113,7 +115,8 @@ class Homescreen extends StatelessWidget {
                                       )),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    side: BorderSide(color: Colors.black, width: 2),
+                                    side: BorderSide(
+                                        color: Colors.black, width: 2),
                                   ),
                                 ),
                               ),
