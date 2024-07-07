@@ -30,7 +30,7 @@ class DetailsPage extends StatelessWidget {
     //String apiKey = dotenv.env['API_KEY'].toString();
     String apiKey = const String.fromEnvironment("API_KEY");
     var response = await http.delete(
-      Uri.parse(Constants.server_url + '/recipes/$id?key=$apiKey'),
+      Uri.parse(Constants.serverUrl + '/recipes/$id?key=$apiKey'),
       headers: {'Content-Type': 'application/json'},
     );
     try {
@@ -62,17 +62,17 @@ class DetailsPage extends StatelessWidget {
           future: loadFoodItem(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('Loading...');
+              return const Text('Loading...');
             } else if (snapshot.hasError) {
-              return Text('Error loading food item');
+              return const Text('Error loading food item');
             } else if (!snapshot.hasData || snapshot.data == null) {
-              return Text('No food item found');
+              return const Text('No food item found');
             } else {
               final food = snapshot.data!;
               return Text(
                 food.getTitle,
                 style: TextStyle(
-                  fontFamily: Constants.exo_font,
+                  fontFamily: Constants.exoFont,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
@@ -101,7 +101,7 @@ class DetailsPage extends StatelessWidget {
                     title: Text(
                       'Confirm Delete',
                       style: TextStyle(
-                        fontFamily: Constants.exo_font,
+                        fontFamily: Constants.exoFont,
                         fontSize: 24.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
@@ -110,7 +110,7 @@ class DetailsPage extends StatelessWidget {
                     content: Text(
                       'Are you sure you want to delete this recipe?',
                       style: TextStyle(
-                        fontFamily: Constants.exo_font,
+                        fontFamily: Constants.exoFont,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
@@ -121,7 +121,7 @@ class DetailsPage extends StatelessWidget {
                         child: Text(
                           'Cancel',
                           style: TextStyle(
-                            fontFamily: Constants.exo_font,
+                            fontFamily: Constants.exoFont,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -135,7 +135,7 @@ class DetailsPage extends StatelessWidget {
                         child: Text(
                           'Delete',
                           style: TextStyle(
-                            fontFamily: Constants.exo_font,
+                            fontFamily: Constants.exoFont,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.red,

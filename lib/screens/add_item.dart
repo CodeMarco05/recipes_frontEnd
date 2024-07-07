@@ -49,7 +49,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       String apiKey = const String.fromEnvironment("API_KEY");
 
       var response = await http.post(
-        Uri.parse(Constants.server_url + '/insertRecipe?key=$apiKey'),
+        Uri.parse('${Constants.serverUrl}/insertRecipe?key=$apiKey'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'title': foodItem.title,

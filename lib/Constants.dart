@@ -8,13 +8,13 @@ class Constants {
   static const int maxItems = 10;
   static const double defaultPadding = 16.0;
 
-  static const String playwrite_font = "Playwrite";
-  static const String exo_font = "Exo";
+  static const String playwriteFont = "Playwrite";
+  static const String exoFont = "Exo";
 
-  static const String server_url = 'https://backend-recipe.prydox-tech.de';
+  static const String serverUrl = 'https://backend-recipe.prydox-tech.de';
 
   static TextStyle defaultTextStyle({
-    String fontFamily = exo_font,
+    String fontFamily = exoFont,
     double fontSize = 16.0,
     FontWeight fontWeight = FontWeight.normal,
     Color color = Colors.black,

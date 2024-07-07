@@ -18,7 +18,7 @@ class HomescreenController extends GetxController {
     List<FoodModel> foodItems = [];
 
     var response = await http.get(
-      Uri.parse(Constants.server_url + '/recipes?key=$apiKey'),
+      Uri.parse('${Constants.serverUrl}/recipes?key=$apiKey'),
       //Uri.parse(Constants.server_url + '/recipes'),
       headers: {'Content-Type': 'application/json'},
     );
@@ -59,7 +59,7 @@ class HomescreenController extends GetxController {
     String apiKey = const String.fromEnvironment("API_KEY");
 
     var response = await http.post(
-      Uri.parse(Constants.server_url + '/recipes?key=$apiKey'),
+      Uri.parse('${Constants.serverUrl}/recipes?key=$apiKey'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'title': foodItem.title,

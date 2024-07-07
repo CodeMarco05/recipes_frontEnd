@@ -214,7 +214,7 @@ class _EditItemScreenState extends State<EditItemScreen> {
     //String apiKey = dotenv.env['API_KEY'].toString();
     String apiKey = const String.fromEnvironment("API_KEY");
     var response = await http.put(
-      Uri.parse(Constants.server_url + '/recipes/$id?key=$apiKey'),
+      Uri.parse(Constants.serverUrl + '/recipes/$id?key=$apiKey'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(updatedFoodItem.toJson()),
     );

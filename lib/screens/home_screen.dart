@@ -47,7 +47,7 @@ class Homescreen extends StatelessWidget {
                             Text(
                               Constants.appName,
                               style: TextStyle(
-                                  fontFamily: Constants.playwrite_font,
+                                  fontFamily: Constants.playwriteFont,
                                   color: Colors.white,
                                   fontSize: 22.sp,
                                   fontWeight: FontWeight.w900),
@@ -112,7 +112,7 @@ class Homescreen extends StatelessWidget {
                                       snapshot.data![index].getIngredients
                                           .join(', '),
                                       style: TextStyle(
-                                        fontFamily: Constants.exo_font,
+                                        fontFamily: Constants.exoFont,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey,
