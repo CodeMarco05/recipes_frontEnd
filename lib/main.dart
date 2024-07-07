@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recipes_frontend/models/food_model.dart';
-import 'package:recipes_frontend/screens/AddItem.dart';
-import 'package:recipes_frontend/screens/Details.dart';
-import 'package:recipes_frontend/screens/EditItemScreen.dart';
-import 'package:recipes_frontend/screens/HomeScreen.dart';
+import 'package:recipes_frontend/screens/add_item.dart';
+import 'package:recipes_frontend/screens/details.dart';
+import 'package:recipes_frontend/screens/home_screen.dart';
+import 'package:recipes_frontend/screens/edit_item_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

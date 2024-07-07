@@ -7,9 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:recipes_frontend/Constants.dart';
 import 'package:recipes_frontend/controllers/home_screen_controller.dart';
 import 'package:recipes_frontend/models/food_model.dart';
-import 'package:recipes_frontend/screens/AddItem.dart';
-import 'package:recipes_frontend/screens/EditItemScreen.dart';
-import 'package:recipes_frontend/screens/HomeScreen.dart';
+import 'package:recipes_frontend/screens/add_item.dart';
+import 'package:recipes_frontend/screens/home_screen.dart';
+import 'package:recipes_frontend/screens/edit_item_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -145,8 +145,7 @@ class DetailsPage extends StatelessWidget {
                           deleteFoodItem(
                               food!.getId); // Call the deleteFoodItem method
                           Navigator.of(context).pop(); // Close the dialog
-                          Get.offAllNamed(Homescreen
-                              .routeName); // Navigate back to the home screen
+                          Get.offAllNamed(Homescreen.routeName, arguments: true);
                         },
                       ),
                     ],

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:recipes_frontend/screens/AddItem.dart';
-import 'package:recipes_frontend/screens/Details.dart';
+import 'package:recipes_frontend/screens/add_item.dart';
+import 'package:recipes_frontend/screens/details.dart';
 
-import '../Constants.dart';
+import '../constants.dart';
 import '../controllers/home_screen_controller.dart';
 import '../models/food_model.dart';
 
@@ -25,7 +25,7 @@ class Homescreen extends StatelessWidget {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                    expandedHeight: 100.0,
+                    expandedHeight: 100.h,
                     floating: false,
                     pinned: false,
                     flexibleSpace: Container(
@@ -52,26 +52,30 @@ class Homescreen extends StatelessWidget {
                                   fontSize: 22.sp,
                                   fontWeight: FontWeight.w900),
                             ),
-                            Container(
-                              height: 50.h,
-                              width: 50.w,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: IconButton(
+                            Stack(
+                              alignment: Alignment
+                                  .center, // Aligns stacked children to the center
+                              children: [
+                                Container(
+                                  height: 50.h,
+                                  width: 50.w,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                IconButton(
                                   icon: Icon(
                                     Icons.add,
                                     color: Colors
-                                        .black, // Adjust icon color for visibility
-                                    size: 30.sp,
+                                        .green, // Adjust icon color for visibility
+                                    size: 50.sp,
                                   ),
                                   onPressed: () {
                                     Get.toNamed(AddItemScreen.routeName);
                                   },
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -92,17 +96,17 @@ class Homescreen extends StatelessWidget {
                               padding: EdgeInsets.only(bottom: 10.0),
                               child: InkWell(
                                 onTap: () {
-                                  homescreenController.saveFoodItem(snapshot.data![index]);
+                                  homescreenController
+                                      .saveFoodItem(snapshot.data![index]);
                                   Get.toNamed(DetailsPage.routeName,
                                       arguments: snapshot.data![index]);
                                 },
                                 child: ListTile(
                                   title: Text(
                                     snapshot.data![index].title,
-                                    style: TextStyle(
-                                        fontFamily: Constants.exo_font,
+                                    style: Constants.defaultTextStyle(
                                         fontSize: 18.sp,
-                                        fontWeight: FontWeight.w600),
+                                        fontWeight: FontWeight.w900),
                                   ),
                                   subtitle: Text(
                                       snapshot.data![index].getIngredients

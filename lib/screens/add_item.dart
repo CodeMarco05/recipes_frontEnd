@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recipes_frontend/Constants.dart';
 import 'package:recipes_frontend/models/food_model.dart';
-import 'package:recipes_frontend/screens/HomeScreen.dart';
+import 'package:recipes_frontend/screens/home_screen.dart';
 import 'package:http/http.dart' as http;
 
 class AddItemScreen extends StatefulWidget {
