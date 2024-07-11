@@ -15,7 +15,7 @@ class Homescreen extends StatelessWidget {
 
   final homescreenController = Get.put(HomescreenController());
 
-  static const String routeName = '/';
+  static const String routeName = '/home';
 
   @override
   Widget build(BuildContext context) {

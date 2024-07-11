@@ -1,0 +1,19 @@
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:recipes_frontend/screens/login_screen.dart';
+import 'package:recipes_frontend/controllers/auth_controller.dart'; // Ensure this import is correct
+
+class AuthMiddleware extends GetMiddleware {
+
+  @override
+  RouteSettings? redirect(String? route) {
+    final AuthController authController = Get.find();
+
+
+    if (!authController.isAuthenticated.value) {
+      return RouteSettings(name: '/');
+    }
+    return null;
+  }
+
+}
